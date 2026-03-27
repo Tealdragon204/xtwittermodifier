@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+  "name": "XOpt",
+  "version": "1.0.0",
+  "description": "Twitter/X feed optimization and media tools",
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "downloads",
+    "clipboardWrite",
+    "tabs",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "src/shared/constants.js",
+      "src/shared/utils.js",
+      "src/background/tokenStore.js",
+      "src/background/locationCache.js",
+      "src/background/apiClient.js",
+      "src/background/actionQueue.js",
+      "src/background/index.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://x.com/*", "https://twitter.com/*"],
+      "js": [
+        "src/shared/constants.js",
+        "src/shared/utils.js",
+        "src/content/observer.js",
+        "src/content/ui/toasts.js",
+        "src/content/ui/panel.js",
+        "src/content/ui/quickMenu.js",
+        "src/content/regionFilter.js",
+        "src/content/index.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    "src/assets/*"
+  ]
+}
